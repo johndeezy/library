@@ -96,33 +96,33 @@ public class Patron{
     }
   }
 
-  // public void addCopy(Copy copy) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO checkouts (patron_id, copy_id) VALUES (:patron_id, :copy_id);";
-  //     con.createQuery(sql)
-  //       .addParameter("patron_id", this.id)
-  //       .addParameter("copy_id", copy.getId())
-  //       .executeUpdate();
-  //   }
-  // }
-  //
-  // public List<Copy> getCopies() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String joinQuery = "SELECT copy_id FROM checkouts WHERE patron_id = :patron_id;";
-  //     List<Integer> copyIds = con.createQuery(joinQuery)
-  //       .addParameter("patron_id", this.getId())
-  //       .executeAndFetch(Integer.class);
-  //
-  //     List<Copy> copies = new ArrayList<Copy>();
-  //
-  //     for (Integer copyId : copyIds) {
-  //       String copyQuery = "SELECT * FROM copies WHERE id = :copyId;";
-  //       Copy copy = con.createQuery(copyQuery)
-  //         .addParameter("copyId", copyId)
-  //         .executeAndFetchFirst(Copy.class);
-  //       copies.add(copy);
-  //     }
-  //     return copies;
-  //   }
-  // }
+  public void addCopy(Copy copy) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO checkouts (patron_id, copy_id) VALUES (:patron_id, :copy_id);";
+      con.createQuery(sql)
+        .addParameter("patron_id", this.id)
+        .addParameter("copy_id", copy.getId())
+        .executeUpdate();
+    }
+  }
+
+  public List<Copy> getCopies() {
+    try(Connection con = DB.sql2o.open()) {
+      String joinQuery = "SELECT copy_id FROM checkouts WHERE patron_id = :patron_id;";
+      List<Integer> copyIds = con.createQuery(joinQuery)
+        .addParameter("patron_id", this.getId())
+        .executeAndFetch(Integer.class);
+
+      List<Copy> copies = new ArrayList<Copy>();
+
+      for (Integer copyId : copyIds) {
+        String copyQuery = "SELECT * FROM copies WHERE id = :copyId;";
+        Copy copy = con.createQuery(copyQuery)
+          .addParameter("copyId", copyId)
+          .executeAndFetchFirst(Copy.class);
+        copies.add(copy);
+      }
+      return copies;
+    }
+  }
 }

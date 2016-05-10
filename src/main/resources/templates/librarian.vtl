@@ -1,0 +1,18 @@
+<h3>Librarin Options</h3>
+<a href="/add-book" class="btn btn-primary">Add a Book</a>
+<h4>Click on book to update or delete!</h4>
+<h5>Book List:</h5>
+#if ($books)
+  <ul>
+    #foreach ($book in $books)
+      <li><a href="/book/$book.getId()"> $book.getTitle() by
+        #foreach ($author in $book.getAuthors())
+          $author.getFullName()
+        #end
+      </a></li>
+    #end
+  </ul>
+#end
+
+<br>
+<a href="/">Home</a>

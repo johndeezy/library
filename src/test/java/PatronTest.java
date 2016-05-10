@@ -27,14 +27,14 @@ public class PatronTest {
   }
 
   @Test
-  public void equals_returnsTrueifTitlesAreTheSame() {
+  public void equals_returnsTrueifNamesAreTheSame() {
     Patron firstPatron = new Patron("Patron 1", "last");
     Patron secondPatron = new Patron("Patron 1", "last");
     assertTrue(firstPatron.equals(secondPatron));
   }
 
   @Test
-  public void save_returnsTrueifTitlesAreTheSame() {
+  public void save_returnsTrueifNamesAreTheSame() {
     Patron firstPatron = new Patron("Patron 1", "last");
     firstPatron.save();
     assertEquals(Patron.all().get(0), firstPatron);
@@ -57,7 +57,7 @@ public class PatronTest {
   }
 
   @Test
-  public void update_updatesTitle_String() {
+  public void update_updatesName_String() {
     Patron myPatron = new Patron("Patron 1", "last");
     myPatron.save();
     myPatron.update("Patron 2", "last");
@@ -73,36 +73,36 @@ public class PatronTest {
     assertEquals(null, Patron.find(myPatronId));
   }
 
-  @Test
-  public void addBook_addsBookToPatron_true() {
-    Book myBook = new Book("Book 1");
-    myBook.save();
-    Patron myPatron = new Patron("First", "Last");
-    myPatron.save();
-    myPatron.addBook(myBook);
-    Book savedBook = myPatron.getBooks().get(0);
-    assertTrue(myBook.equals(savedBook));
-  }
-
-  @Test
-  public void getBooks_returnsAllBooks_List() {
-    Patron myPatron = new Patron("tim", "thompson");
-    myPatron.save();
-    Book myBook = new Book("Booky");
-    myBook.save();
-    myPatron.addBook(myBook);
-    List savedBooks = myPatron.getBooks();
-    assertEquals(1, savedBooks.size());
-  }
-
-  @Test
-  public void delete_deletesAllBooksAndPatronsAssociations() {
-    Patron myPatron = new Patron("tim", "tom");
-    myPatron.save();
-    Book myBook= new Book("Book 1");
-    myBook.save();
-    myPatron.addBook(myBook);
-    myPatron.delete();
-    assertEquals(0, myBook.getPatrons().size());
-  }
+  // @Test
+  // public void addCopy_addsCopyToPatron_true() {
+  //   Copy myCopy = new Copy("Copy 1");
+  //   myCopy.save();
+  //   Patron myPatron = new Patron("First", "Last");
+  //   myPatron.save();
+  //   myPatron.addCopy(myCopy);
+  //   Copy savedCopy = myPatron.getCopies().get(0);
+  //   assertTrue(myCopy.equals(savedCopy));
+  // }
+  //
+  // @Test
+  // public void getCopys_returnsAllCopies_List() {
+  //   Patron myPatron = new Patron("tim", "thompson");
+  //   myPatron.save();
+  //   Copy myCopy = new Copy("Copyy");
+  //   myCopy.save();
+  //   myPatron.addCopy(myCopy);
+  //   List savedCopies = myPatron.getCopies();
+  //   assertEquals(1, savedCopys.size());
+  // }
+  //
+  // @Test
+  // public void delete_deletesAllCopiesAndPatronsAssociations() {
+  //   Patron myPatron = new Patron("tim", "tom");
+  //   myPatron.save();
+  //   Copy myCopy= new Copy("Copy 1");
+  //   myCopy.save();
+  //   myPatron.addCopy(myCopy);
+  //   myPatron.delete();
+  //   assertEquals(0, myCopy.getPatrons().size());
+  // }
 }

@@ -1,0 +1,11 @@
+<h2>$book.getTitle()</h2>
+<h3>Author(s):</h3>
+<ul>
+  #foreach ($author in $book.getAuthors())
+    <li>$author.getFullName()</li>
+  #end
+</ul>
+
+<br>
+<a href="/librarian">Back to Librarian Options</a>
+<a href="/">Home</a>
