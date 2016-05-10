@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import org.sql2o.*;
 
 public class Book{
@@ -18,5 +19,10 @@ public class Book{
     return id;
   }
 
-  
+  public static List<Book> all() {
+    String sql = "SELECT id, title FROM books";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Book.class);
+    }
+  }
 }
