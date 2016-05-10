@@ -62,10 +62,10 @@ public class Author{
   public static Author find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM authors WHERE id=:id;";
-      Author book = con.createQuery(sql)
+      Author author = con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetchFirst(Author.class);
-      return book;
+      return author;
     }
   }
 
