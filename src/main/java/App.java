@@ -57,5 +57,45 @@ public class App {
       model.put("template", "templates/book.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    post("/add-author/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+
+      String authorFirstName = request.queryParams("authorFirstName");
+      String authorLastName = request.queryParams("authorLastName");
+      Author newAuthor = new Author(authorFirstName, authorLastName);
+
+      newAuthor.save();
+      book.addAuthor(newAuthor);
+
+      int bookId = book.getId();
+
+      response.redirect("/book/" + bookId);
+      return null;
+    });
+
+    post("/edit-title/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      String updatedTitle = request.queryParams("title");
+      book.update(updatedTitle);
+
+      response.redirect("/book/" + book.getId());
+      return null;
+    });
+
+    get("/delete-book/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+
+      book.delete();
+
+      model.put("books", Book.all());
+      model.put("template", "templates/librarian.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
   }
 }

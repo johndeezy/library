@@ -2,9 +2,27 @@
 <h3>Author(s):</h3>
 <ul>
   #foreach ($author in $book.getAuthors())
-    <li>$author.getFullName()</li>
+    <li><a href="/author/$author.getId()">$author.getFullName()</a></li>
   #end
 </ul>
+
+<h3>Add Another Author:</h3>
+<form action="/add-author/$book.getId()" method="post">
+  <label for="authorFirstName">First Name:</label>
+  <input type="text" id="authorFirstName" name="authorFirstName">
+  <label for="authorLastName">Last Name:</label>
+  <input type="text" id="authorLastName" name="authorLastName">
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<h3>Edit Title</h3>
+<form action="/edit-title/$book.getId()" method="post">
+  <label for="title">Edited Title:</label>
+  <input type="text" id="title" name="title" value="$book.getTitle()">
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<a href="/delete-book/$book.getId()" class="btn btn-danger">Delete Book</a>
 
 <br>
 <a href="/librarian">Back to Librarian Options</a>
