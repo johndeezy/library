@@ -1,6 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.sql2o.*;
+import java.util.List;
 
 
 public class BookTest {
@@ -70,5 +71,38 @@ public class BookTest {
     int myBookId = myBook.getId();
     myBook.delete();
     assertEquals(null, Book.find(myBookId));
+  }
+
+  @Test
+  public void addAuthor_addsAuthorToBook_true() {
+    Book myBook = new Book("Book 1");
+    myBook.save();
+    Author author = new Author("First", "Last");
+    author.save();
+    myBook.addAuthor(author);
+    Author savedAuthor = myBook.getAuthors().get(0);
+    assertTrue(author.equals(savedAuthor));
+  }
+
+  @Test
+  public void getAuthors_returnsAllAuthors_List() {
+    Author myAuthor = new Author("tim", "thompson");
+    myAuthor.save();
+    Book myBook = new Book("Booky");
+    myBook.save();
+    myBook.addAuthor(myAuthor);
+    List savedAuthors = myBook.getAuthors();
+    assertEquals(1, savedAuthors.size());
+  }
+
+  @Test
+  public void delete_deletesAllBooksAndAuthorsAssociations() {
+    Author myAuthor = new Author("tim", "tom");
+    myAuthor.save();
+    Book myBook= new Book("Book 1");
+    myBook.save();
+    myBook.addAuthor(myAuthor);
+    myBook.delete();
+    assertEquals(0, myAuthor.getBooks().size());
   }
 }
